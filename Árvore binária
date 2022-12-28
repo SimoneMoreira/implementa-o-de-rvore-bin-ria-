@@ -1,0 +1,109 @@
+/* Aluna: Simone Correa da Silva Moreira RA: 18294785*/
+#include<stdio.h>
+#include<stdlib.h>
+#include <locale.h>
+#define tamanho 100
+#define E 0
+#define D 1
+#define R -1
+
+
+struct strNo{
+	char dado;
+	int esquerda;
+	int direita;
+	int pai;
+};
+
+struct strNo arvore[tamanho];
+int lado,indice=0;
+int opt=-1;
+int pai, no,n;
+
+
+void insere(int pai,char dado, int lado);
+int procura(char dado);
+int emOrdem(int n);
+
+int main (void){
+	setlocale(LC_ALL,"portuguese");
+	int temp;
+	int j;
+		printf("RA:18294785");
+	insere(-1,1,R);
+	temp=procura(1);
+		insere(temp,8,D);
+	temp=procura(8);
+		insere(temp,2,E);
+	temp=procura(2);
+		insere(temp,4,D);
+	temp=procura(4);
+		insere(temp,7,D);
+	temp=procura(7);
+		insere(temp,5,E);
+	temp=procura(8);
+		insere(temp,9,D);
+	temp=procura(9);
+		insere(temp,8,E);
+		printf("\n Vetor que representa a árvore: \n");
+		for(j=0; j<indice;j++){
+		printf("%d  ",arvore[j].dado);
+		}
+		printf("\n percurso em ordem:");
+	emOrdem(0);
+	system("pause");
+	return(0);
+}
+int emOrdem(int n){
+	
+	if(n!=-1){
+		emOrdem(arvore[n].esquerda);
+		printf("%d ",arvore[n].dado);
+		emOrdem(arvore[n].direita);	
+		return (1);
+		system ("pause");
+		}
+		return(0);
+}
+void insere(int pai, char dado,int lado){
+	switch (lado){
+		case E:
+			arvore[pai].esquerda = indice;
+			arvore[indice].dado = dado;
+			arvore[indice].pai = pai;
+			arvore[indice].esquerda =-1;
+			arvore[indice].direita =-1;
+			indice++;
+
+		break;
+		case D:
+			arvore[pai].direita = indice;
+			arvore[indice].dado = dado;
+			arvore[indice].pai = pai;
+			arvore[indice].esquerda =-1;
+			arvore[indice].direita = -1;
+			indice++;
+		break;
+		case R:
+			arvore[indice].dado = dado;
+			arvore[indice].pai = pai;
+			arvore[indice].esquerda =-1;
+			arvore[indice].direita = -1;
+			indice++;
+		break;	
+	}
+}	
+
+int procura( char dado){
+	int i;
+	if(indice!=0){
+		for( i=0; i<indice; i++){
+			if(arvore[i].dado==dado){
+				return(i);
+			}
+		}
+	}
+	else{
+		return(0);
+	}
+}
